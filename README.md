@@ -3,13 +3,21 @@ Log the timesheet for a particular month automatically
 
 
 ### 1. Install Python3
->brew install python
+```shell
+brew install python
+```
 ##### 2. Create a virtual env inside the project
->virtualenv venv -p /usr/bin/python3
+```shell
+virtualenv venv -p /usr/bin/python3
+```
 ##### 3. Activate the virtual env
->source venv/bin/activate
+```shell
+source venv/bin/activate
+```
 ##### 4. Install packages from [requirements.txt](requirements.txt)
->python3 -m pip install -r requirements.txt 
+```shell
+python3 -m pip install -r requirements.txt
+``` 
 
 Selenium uses **Safari** as a browser for automation, and you should enable the **Developer Tools** and **Allow Remote Automation**
 - Open safari

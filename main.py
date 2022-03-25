@@ -61,6 +61,15 @@ def loginUser():
     return redirectToTimeSheetPage(START_DAY)
 
 
+def submitWeekForApproval(entryDate: int):
+    try:
+        if entryDate >= 4:
+            driver.find_element(By.CSS_SELECTOR, "#timesheet_frame > div.mt-4.d-flex > form > button").click()
+            time.sleep(2)
+    except Exception:
+        print("Approval button was not found!")
+
+
 def redirectToTimeSheetPage(day: int):
     # Get the last day of the month
     lastDayOfTheMonth = calendar.monthrange(START_YEAR, START_MONTH)[1]
@@ -99,9 +108,13 @@ def redirectToTimeSheetPage(day: int):
             driver.find_element(By.CSS_SELECTOR, "#new_timesheet_entry > button").click()
             time.sleep(2)
 
+            submitWeekForApproval(entryDate)
+
             # After adding an entry go for the next day
             return redirectToTimeSheetPage(day + 1)
         else:
+            submitWeekForApproval(entryDate)
+
             # If there is an entry for the current day go to the next day
             return redirectToTimeSheetPage(day + 1)
     except Exception:
