@@ -1,11 +1,12 @@
+import calendar
+import datetime
+import platform
 import time
+
+from dotenv import dotenv_values
 from requests import Session
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import datetime
-import calendar
-from dotenv import dotenv_values
-
 
 ###########################################
 
@@ -35,6 +36,7 @@ HOURS: str = ENV_VARIABLES['HOURS']
 START_DAY = 1
 START_MONTH = 2
 START_YEAR = 2022
+
 
 ###########################################
 
@@ -85,7 +87,7 @@ def redirectToTimeSheetPage(day: int):
 
     time.sleep(3)
     try:
-        currentFilledMinutes = driver.find_element(By.CSS_SELECTOR, f"a[href='{currentDayUrl}'] > small")\
+        currentFilledMinutes = driver.find_element(By.CSS_SELECTOR, f"a[href='{currentDayUrl}'] > small") \
             .text.replace(" ", "").replace("\n", "")
 
         # Check if the entry is already added for the current day
@@ -113,7 +115,16 @@ def quitBrowser():
 
 
 with Session() as session:
-    driver = webdriver.Safari()
+    if "Windows" in platform.platform() or "Linux" in platform.platform():
+        import chromedriver_autoinstaller
+
+        chromedriver_autoinstaller.install()
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--headless')
+        driver = webdriver.Chrome(options=chrome_options)
+    else:
+        driver = webdriver.Safari()
+
     driver.maximize_window()
 
     loginUser()
