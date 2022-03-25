@@ -128,3 +128,4 @@ with Session() as session:
     driver.maximize_window()
 
     loginUser()
+
